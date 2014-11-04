@@ -7,9 +7,15 @@
 		<script type="text/javascript" src="pouchdb-3.0.6.min.js"></script>
 		<script type="text/javascript">
 		/*global PouchDB*/
-        var db = new PouchDB('books');
+        var db = new PouchDB('books'),
+        	remote = 'https://iotiot.cloudant.com/iotserver',
+        	opts = {
+      			continuous: true
+    		};
+		db.replicate.to(remote, opts);
+		db.replicate.from(remote, opts);
+
         function addBook() {
-            alert('add');
             var booktitle = window.document.bookform.titlefield.value;
             var bookisbn = window.document.bookform.isbnfield.value;
             var bookauthor = window.document.bookform.authorfield.value;
@@ -18,7 +24,6 @@
                 title: booktitle,
                 author: bookauthor
             };
-            alert(db);
             db.put(book, function callback(error, result) {
                 if (!error) {
                     clearFields();
