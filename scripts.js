@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html>
-	<head>
-	<meta charset="utf-8">
-	<title>PhoneGap Build Sample</title>
-		<script type="text/javascript" src="phonegap-1.0.0.js"></script>
-		<script type="text/javascript" src="pouchdb-3.0.6.min.js"></script>
-		<script type="text/javascript">
-		/*global PouchDB*/
-        var db = new PouchDB('books');
+/*global PouchDB*/
+var db;
+
+// The below, or something like it, is necessary to use PouchDB functionality!
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady(){
+        db = new PouchDB('books');
         function addBook() {
             alert('add');
             var booktitle = window.document.bookform.titlefield.value;
@@ -50,29 +48,5 @@
             }
             str += "</table>";
             div.innerHTML = str;
-                    
         }
-		</script>
-			
-		</script>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-		<meta name="apple-mobile-web-app-capable" content="yes"/>
-</head>
-	<body>
-    <form name="bookform">
-        book title <input type="text" name="titlefield" />
-        <br/>
-        book author <input type="text" name="authorfield" />
-        <br/>
-        book isbn <input type="text" name="isbnfield" />
-        <br/>
-        <input type="button" value="add book" onClick="addBook()" />
-        <br/>
-        <input type="button" value="clear fields" onClick="clearFields()" />
-        <br/>
-        <input type="button" value="show books" onClick="showBooks()" />
-    </form>
-    <div id="message"></div>
-	</body>
-</html>
+};
