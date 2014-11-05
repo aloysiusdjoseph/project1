@@ -7,11 +7,14 @@
 		<script type="text/javascript" src="pouchdb-3.0.6.min.js"></script>
 		<script type="text/javascript">
 		/*global PouchDB*/
-        var db = new PouchDB('books'),
-        	remote = 'https://iotiot.cloudant.com/iotserver',
+        var db = new PouchDB('books', {adapter: 'websql'}),
+        	remote = 'https://iotiot:iot$$$iot@iotiot.cloudant.com/iotserver',
         	opts = {
       			continuous: true
     		};
+    	if (!db.adapter) { // websql not supported by this browser
+          db = new PouchDB('books')
+        }
 		db.replicate.to(remote, opts);
 		db.replicate.from(remote, opts);
 			
@@ -25,6 +28,7 @@
                 author: bookauthor
             };
             db.put(book, function callback(error, result) {
+                alert(error || result);
                 if (!error) {
                     clearFields();
                     document.getElementById("message").innerHTML =
