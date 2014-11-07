@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
 	<head>
 	<meta charset="utf-8">
 	<title>PhoneGap Build Sample</title>
-	    <link href="ionic.css" rel="stylesheet">
-	
-	    <script type="text/javascript" src="ionic.bundle.js"></script>
+	    <script src="angular.min.js"></script>
 		<script type="text/javascript" src="phonegap-1.0.0.js"></script>
 		<script type="text/javascript" src="pouchdb-3.0.6.min.js"></script>
 		
 		<script type="text/javascript">
 		
 		/*global PouchDB angular*/
-		var myApp = angular.module('myApp', ['ionic']);
+		var myApp = angular.module('myApp', []);
 		myApp.controller('MyCtrl', function($scope) {
             var db = new PouchDB('books', {adapter: 'websql'}),
             	//remote = 'https://iotiot:iot$$$iot@iotiot.cloudant.com/iotserver',
@@ -54,7 +52,6 @@
                 $scope.$apply();
             };
             $scope.showBooks = function() {
-                $scope.clearFields();
                 db.allDocs( {include_docs: true, descending: true},
                             function(err, doc) {
                                 $scope.showTableOfBooks(doc.rows);
@@ -71,52 +68,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 		<meta name="apple-mobile-web-app-capable" content="yes"/>
     </head>
-    
-	<body ng-app="myApp">
-	
-        <div class="bar bar-header bar-dark">
-          <h1 class="title">Build MobileApp with just Browser</h1>
-        </div>
-      
-        <ion-content class="has-header" padding="true">
-        	<div ng-init="books = []" ng-controller="MyCtrl">
-                <form name="bookform">
-                    <div class="list">
-                      <label class="item item-input">
-                        <span class="input-label">Title</span>
-                        <input type="text" ng-model="titlefield">
-                      </label>
-                      <label class="item item-input">
-                        <span class="input-label">Author</span>
-                        <input type="text" ng-model="authorfield">
-                      </label>
-                      <label class="item item-input">
-                        <span class="input-label">ISBN</span>
-                        <input type="text" ng-model="isbnfield">
-                      </label>                      
-                    </div>
-                    <div class="button-bar">
-                        <button class ='button button-dark' ng-click="addBook()">Add Book</button> <br/>
-                        <button class ='button button-dark' ng-click="showBooks()">Show Books</button> <br/><br/>
-                    </div>
-                    <div>
-                      <label class="item item-input">
-                        <span class="input-label">Result</span>
-                        <input type="text" ng-model="message">
-                      </label> 
-                    </div>
-                    <div class="row responsive-sm" data-ng-repeat="book in books">
-                      <div class="col">{{book.doc._id}}</div>
-                      <div class="col">{{book.doc.title}}</div>
-                      <div class="col">{{book.doc.author}}</div>
-                     </div>
-                </form>
-            </div>
-        </ion-content>
-      
-        <div class="bar bar-footer bar-dark">
-          <div class="title"></div>
-        </div>
-
+	<body>
+	<div ng-init="books = []" ng-controller="MyCtrl">
+    <form name="bookform">
+        Book title <input type="text" ng-model="titlefield" /> <br/>
+        Book author <input type="text" ng-model="authorfield" /> <br/>
+        Book isbn <input type="text" ng-model="isbnfield" /> <br/>
+        <button ng-click="addBook()">Add Book</button> <br/>
+        <button ng-click="clearFields()">Clear Fields</button> <br/>
+        <button ng-click="showBooks()">Show Books</button> <br/><br/>
+        Result <input type="text" ng-model="message" /> <br/>
+      <ul>
+        <li data-ng-repeat="book in books">
+          <span>{{book.doc._id}}</span>
+          <span>{{book.doc.title}}</span>
+          <span>{{book.doc.author}}</span>
+        </li>
+      </ul>
+  
+    </form>
+    </div>
 	</body>
 </html>
