@@ -16,7 +16,7 @@
 		var myApp = angular.module('myApp', ['ionic']);
 		myApp.controller('MyCtrl', function($scope) {
             var db = new PouchDB('books', {adapter: 'websql'}),
-            	//remote = 'https://iotiot:iot$$$iot@iotiot.cloudant.com/iotserver',
+            	remote = 'https://iotiot:iot$$$iot@iotiot.cloudant.com/iotserver',
             	opts = {
           			continuous: true
         		};
@@ -24,7 +24,8 @@
               db = new PouchDB('books');
             }
     		//db.replicate.to(remote, opts);
-    		//db.replicate.from(remote, opts);
+    	    //db.replicate.from(remote, opts);
+    			var sync = PouchDB.sync(remote, db, {live: true});
     			
     		//$scope.books = [];
     		
