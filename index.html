@@ -16,15 +16,15 @@
 		var myApp = angular.module('myApp', ['ionic']);
 		myApp.controller('MyCtrl', function($scope) {
             var db = new PouchDB('books', {adapter: 'websql'}),
-            	remote = 'https://iotiot:iot$$$iot@iotiot.cloudant.com/iotserver',
+            	//remote = 'https://iotiot:iot$$$iot@iotiot.cloudant.com/iotserver',
             	opts = {
           			continuous: true
         		};
         	if (!db.adapter) { // websql not supported by this browser
               db = new PouchDB('books');
             }
-    		db.replicate.to(remote, opts);
-    		db.replicate.from(remote, opts);
+    		//db.replicate.to(remote, opts);
+    		//db.replicate.from(remote, opts);
     			
     		//$scope.books = [];
     		
@@ -52,7 +52,7 @@
                 $scope.message="";
                 $scope.books=[];
                 $scope.bookform.$setPristine();
-                $scope.$apply();
+                //$scope.$apply();
             };
             $scope.showBooks = function() {
                 $scope.clearFields();
